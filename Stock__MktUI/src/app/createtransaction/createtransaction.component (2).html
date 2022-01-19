@@ -1,0 +1,96 @@
+<html>
+
+<head>
+    <title>
+        Sign Up
+    </title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-sm-8 offset-2 nopadding">
+            <h2 class='text-center'>Create a transaction</h2>
+            <form class='form-vertical' [formGroup]='createForm' (ngSubmit)='onSubmit()' style='margin-top:3rem'>
+                <div class='form-group row'>
+                    <label class='control-label control-label-sm col-sm-4 font-weight-bold' for='sector'>Sector:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-8'>
+                        <select class='form-control form-control-sm' (change)="dropChange($event.target.value)"
+                            formControlName='sector' id='sector'
+                            [ngClass]="{ 'is-invalid': submitted && createForm.get('sector').errors }" required>
+                            <option value="" [disabled]="true" [selected]="true">Choose a Sector</option>
+                            <option *ngFor="let s of sectors">{{s}}</option>
+                        </select>
+                        <div class='invalid-feedback' *ngIf="createForm.get('sector').errors && submitted">
+                            <div *ngIf="createForm.get('sector').errors.required">Sector is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='form-group row'>
+                    <label class='col-sm-4 font-weight-bold control-label-sm' for='company'>Company:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-8'>
+                        <select class='form-control form-control-sm' formControlName='company' id='company'
+                            [ngClass]="{ 'is-invalid': submitted && createForm.get('company').errors }" required>
+                            <option value="" [disabled]="true" [selected]="true">Choose a Company</option>
+                            <option *ngFor="let c of companys">{{c}}</option>
+                        </select>
+
+                        <div class='invalid-feedback' *ngIf="createForm.get('company').errors && submitted">
+                            <div *ngIf="createForm.get('company').errors.required">Company is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='form-group row'>
+                    <label class='col-sm-4 font-weight-bold control-label-sm' for='rate'>Rate:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-8'>
+                        <input type='text' class='form-control form-control-sm' formControlName='rate' id='rate'
+                            placeholder='Enter rate'
+                            [ngClass]="{ 'is-invalid': submitted && createForm.get('rate').errors }" required>
+                        <div class='invalid-feedback' *ngIf="createForm.get('rate').errors && submitted">
+                            <div *ngIf="createForm.get('rate').errors.required">Rate is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='form-group row'>
+                    <label class='col-sm-4 font-weight-bold control-label-sm' for='nshares'>Number of shares:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-8'>
+                        <input type='text' class='form-control form-control-sm' formControlName='nshares' id='nshares'
+                            placeholder='Enter number of shares'
+                            [ngClass]="{ 'is-invalid': submitted && createForm.get('nshares').errors }" required>
+                        <div class='invalid-feedback' *ngIf="createForm.get('nshares').errors && submitted">
+                            <div *ngIf="createForm.get('nshares').errors.required">Number of shares is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='form-group row'>
+                    <label class='col-sm-4 font-weight-bold control-label-sm' for='namt'>Net Amount:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-8'>
+
+                        <textarea class='form-control form-control-sm rounded-2' disabled="true" id='namt' rows="1"
+                            cols="36">{{this.createForm.get('rate').value*this.createForm.get('nshares').value}}</textarea>
+                    </div>
+
+                </div>
+                <div class='row'>
+                    <div class='col-sm-3 offset-5 mt-sm-5'>
+                        <button class='btn btn-dark btn-lg' type='submit'>Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+
+
+</html>

@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <title>
+        Login
+    </title>
+</head>
+
+<body>
+    <div class='container'>
+        <div class="col-sm-8 offset-2 nopadding">
+            <h2 class='text-center'>Login</h2>
+            <form class='form-vertical' (ngSubmit)="onSubmit()" [formGroup]="loginForm" style='margin-top:3rem'>
+                <div class='form-group row'>
+                    <label class='control-label control-label-sm col-sm-4 font-weight-bold' for='username'>Username:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-6'>
+                        <input type='text' class='form-control form-control-sm' formControlName='username' id='username' placeholder='Enter Username' [ngClass]="{'is-invalid':submitted && loginForm.get('username').errors}">
+                        <div class='invalid-feedback' *ngIf="loginForm.get('username').errors && submitted">
+                            <div *ngIf="loginForm.get('password').errors.required">Username is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='form-group row'>
+                    <label class='control-label control-label-sm col-sm-4 font-weight-bold' for='password'>Password:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-6'>
+                        <input type='password' class='form-control form-control-sm' formControlName='password' id='password' placeholder='Enter Password' [ngClass]="{'is-invalid':submitted && loginForm.get('password').errors}">
+                        <div class='invalid-feedback' *ngIf="submitted && loginForm.get('password').errors">
+                           <div *ngIf="loginForm.get('password').errors.required">Password is required</div> 
+                        </div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-sm-3 offset-5 mt-sm-5'>
+                        <button class='btn btn-dark btn-lg' type='submit'>Login</button>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-sm-4 offset-2 mt-sm-4 mr-sm-1'>
+                        <button class='btn btn-link' type='button'>Forgot Password?</button>
+                    </div>
+
+
+                    <div class='col-sm-5  ml-sm-1 mt-sm-4'>
+
+                        <button class='btn btn-link' type='button' [routerLink]="['/register']">If not a
+                            member?Register</button>
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<router-outlet></router-outlet>
+
+</html>

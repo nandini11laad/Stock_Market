@@ -1,0 +1,159 @@
+<html>
+
+<head>
+    <title>
+        View Transactions
+    </title>
+</head>
+
+<body>
+    <div class='container'>
+        <div class='row nopadding' style="margin-top: 3rem;">
+            <div class='col-sm-4 form-group form-inline'>
+                <input type='text' class='form-control' [(ngModel)]="txt" placeholder="Search by any text">
+                <button class='btn btn-dark ml-sm-2' (click)="search()" type='button'>Search</button>
+            </div>
+            <div class='col-sm-4 offset-sm-4 '>
+                <button class='btn btn-dark' type='button' [routerLink]="['/create']">Add Transaction</button>
+            </div>
+        </div>
+        <table class='table table-sm table-bordered' style='margin-top:6rem'>
+            <thead>
+                <tr class='text-center'>
+                    <th>Sector</th>
+                    <th>Company</th>
+                    <th>Rate</th>
+                    <th>Number of shares</th>
+                    <th>Net Amount</th>
+                    <th>Status</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class='text-center' *ngFor="let t of transaction">
+                    <td>{{t.Sector[0].Sname}}</td>
+                    <td>{{t.Company[0].Cname}}</td>
+                    <td>{{t.Nshares}}</td>
+                    <td>{{t.Rate}}</td>
+                    <td>{{t.NetAmt}}</td>
+                    <td></td>
+                    <td><button type="button" (click)="editClose(t.TID)" class="btn btn-link" data-toggle="modal"
+                            data-target="#editModal">Edit</button></td>
+                    <td><button type="button"  (click)="deleteClose(t.TID)" class="btn btn-link" data-toggle="modal"
+                            data-target="#deleteModal">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="modal" #editmodal id="editModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Edit Transaction</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form class='form-vertical' [formGroup]='editForm' (ngSubmit)='onSubmit()' style='margin-top:3rem'>
+                        <div class='form-group row'>
+                            <label class='control-label control-label-sm col-sm-4 font-weight-bold' for='sector'>Sector:
+                                <sup class='text-danger'>*</sup>
+                            </label>
+                            <div class='col-sm-8'>
+                                <select  class='form-control form-control-sm' (change)="dropChange($event.target.value)" formControlName='sector' id='sector'
+                                     [ngClass]="{ 'is-invalid': submitted && editForm.get('sector').errors }"
+                                    required>
+                                    <option  [disabled]='true' [selected]="true">Choose a Sector</option>
+                                    <option *ngFor="let s of sectors">{{s}}</option>
+                                </select>
+                                <div class='invalid-feedback' *ngIf="editForm.get('sector').errors && submitted">
+                                    <div *ngIf="editForm.get('sector').errors.required">Sector is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label class='col-sm-4 font-weight-bold control-label-sm' for='company'>Company:
+                                <sup class='text-danger'>*</sup>
+                            </label>
+                            <div class='col-sm-8'>
+                                <select class='form-control form-control-sm' formControlName='company' id='company'
+                                    [ngClass]="{ 'is-invalid': submitted && editForm.get('company').errors }" required>
+                                    <option value='' [disabled]='true' [selected]="true">Choose a Company</option>
+                                    <option *ngFor="let c of companys">{{c}}</option>
+                                </select>
+        
+                                <div class='invalid-feedback' *ngIf="editForm.get('company').errors && submitted">
+                                    <div *ngIf="editForm.get('company').errors.required">Company is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label class='col-sm-4 font-weight-bold control-label-sm' for='rate'>Rate:
+                                <sup class='text-danger'>*</sup>
+                            </label>
+                            <div class='col-sm-8'>
+                                <input type='text' class='form-control form-control-sm' formControlName='rate' id='rate'
+                                    placeholder='Enter rate'
+                                    [ngClass]="{ 'is-invalid': submitted && editForm.get('rate').errors }" required>
+                                <div class='invalid-feedback' *ngIf="editForm.get('rate').errors && submitted">
+                                    <div *ngIf="editForm.get('rate').errors.required">Rate is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label class='col-sm-4 font-weight-bold control-label-sm' for='nshares'>Number of shares:
+                                <sup class='text-danger'>*</sup>
+                            </label>
+                            <div class='col-sm-8'>
+                                <input type='text' class='form-control form-control-sm' formControlName='nshares' id='nshares'
+                                    placeholder='Enter number of shares'
+                                    [ngClass]="{ 'is-invalid': submitted && editForm.get('nshares').errors }" required>
+                                <div class='invalid-feedback' *ngIf="editForm.get('nshares').errors && submitted">
+                                    <div *ngIf="editForm.get('nshares').errors.required">Number of shares is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label class='col-sm-4 font-weight-bold control-label-sm' for='namt'>Net Amount:
+                                <sup class='text-danger'>*</sup>
+                            </label>
+                            <div class='col-sm-8'>
+
+                                <textarea class='form-control form-control-sm rounded-2' disabled="true" id='namt' rows="1"
+                                    cols="36">{{this.editForm.get('rate').value*this.editForm.get('nshares').value}}</textarea>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" (click)="edit()" class="btn btn-dark">Update</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal" #deletemodal id="deleteModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Delete Transaction</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to delete?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-dark" (click)="delete()">Delete</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</body>
+
+</html>

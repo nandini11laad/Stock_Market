@@ -1,0 +1,93 @@
+<html>
+
+<head>
+    <title>
+        Sign Up
+    </title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-sm-8 offset-2 nopadding">
+            <h2 class='text-center'>Register</h2>
+            <form class='form-vertical' [formGroup]='registerForm' style='margin-top:3rem' (ngSubmit)='onSubmit()'>
+                <div class='form-group row'>
+                    <label class='control-label col-sm-4 font-weight-bold control-label-sm' for='name'>Name:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-8'>
+                        <input type='text' class='form-control form-control-sm' formControlName='name' id='name' placeholder='Enter Name' [ngClass]="{ 'is-invalid': submitted && registerForm.get('name').errors }" required>
+                        <div class='invalid-feedback' *ngIf="registerForm.get('name').errors && submitted">
+                            <div *ngIf="registerForm.get('name').errors.required">Name is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='form-group row'>
+                    <label class='col-sm-4 font-weight-bold control-label-sm' for='email'>Email:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-8'>
+                        <input type='text' class='form-control form-control-sm' formControlName='email' id='email' placeholder='Enter Email' [ngClass]="{ 'is-invalid': submitted && registerForm.get('email').errors }" required>
+                        <div class='invalid-feedback' *ngIf="registerForm.get('email').errors && submitted">
+                            <div *ngIf="registerForm.get('email').errors.required">Email is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='form-group row'>
+                    <label class='col-sm-4 font-weight-bold control-label-sm' for='username'>Username:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-8'>
+                        <input type='text' class='form-control form-control-sm' formControlName='username' id='username' placeholder='Enter username' [ngClass]="{ 'is-invalid': submitted && registerForm.get('username').errors }" required>
+                        <div class='invalid-feedback' *ngIf="registerForm.get('username').errors && submitted">
+                            <div *ngIf="registerForm.get('username').errors.required">Username is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='form-group row'>
+                    <label class='col-sm-4 font-weight-bold control-label-sm' for='password'>Password:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-8'>
+                        <input type='password' class='form-control form-control-sm' formControlName='password' id='password' placeholder='Enter password' [ngClass]="{ 'is-invalid': submitted && registerForm.get('password').errors }" required>
+                        <div class='invalid-feedback' *ngIf="registerForm.get('password').errors && submitted">
+                            <div *ngIf="registerForm.get('password').errors.required">Password is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='form-group row'>
+                    <label class='col-sm-4 font-weight-bold control-label-sm' for='cpassword'>Confirm Password:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-8'>
+                        <input type='password' class='form-control form-control-sm' formControlName='cpassword' id='cpassword' placeholder='Enter password' [ngClass]="{ 'is-invalid': submitted && registerForm.get('cpassword').errors }" required>
+                        <div class='invalid-feedback' *ngIf="registerForm.get('cpassword').errors && submitted">
+                            <div *ngIf="registerForm.get('cpassword').errors.required">Password is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='form-group row'>
+                    <label class='col-sm-4 font-weight-bold control-label-sm' for='cid'>Client ID:
+                        <sup class='text-danger'>*</sup>
+                    </label>
+                    <div class='col-sm-8'>
+                        <input type='number' class='form-control form-control-sm' formControlName='cid' id='cid' placeholder='Enter Client ID' [ngClass]="{ 'is-invalid': submitted && registerForm.get('cid').errors }" required>
+                        <div class='invalid-feedback' *ngIf="registerForm.get('cid').errors && submitted">
+                            <div *ngIf="registerForm.get('cid').errors.required">Client ID is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-sm-3 offset-5 mt-sm-5'>
+                        <button class='btn btn-dark btn-lg' type='submit'>Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+
+
+</html>
